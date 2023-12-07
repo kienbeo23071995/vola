@@ -139,6 +139,14 @@ const MediaManagement = lazy(() => {
         .then(([moduleExports]) => moduleExports);
 });
 
+const MediaCampaign = lazy(() => {
+    return Promise.all([
+        import('../pages/MediaManagement/MediaManagementByCampaign/mediaManagementByCampaign'),
+        new Promise(resolve => setTimeout(resolve, 0))
+    ])
+        .then(([moduleExports]) => moduleExports);
+});
+
 const CreateMedia = lazy(() => {
     return Promise.all([
         import('../pages/MediaManagement/createMediaManagement/createMedia'),
@@ -230,6 +238,10 @@ const RouterURL = withRouter(({ location }) => {
                             <MediaManagement />
                         </PrivateRoute>
 
+                        <PrivateRoute exact path="/media-campaign/:idcampaign">
+                            <MediaCampaign />
+                        </PrivateRoute>
+
                         <PrivateRoute exact path="/create-media">
                             <CreateMedia />
                         </PrivateRoute>
@@ -307,9 +319,13 @@ const RouterURL = withRouter(({ location }) => {
                         <DefaultContainer />
                     </Route>
 
-                    <Route exact path="/media-management">
+                    <Route exact path="/media-management/:idcampaign">
                         <DefaultContainer />
                     </Route>
+
+                    <PrivateRoute exact path="/media-campaign/:idcampaign">
+                        <DefaultContainer />
+                    </PrivateRoute>
 
                     <Route exact path="/create-media">
                         <DefaultContainer />

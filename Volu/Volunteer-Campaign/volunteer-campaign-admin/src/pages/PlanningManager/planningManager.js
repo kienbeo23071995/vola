@@ -29,6 +29,7 @@ import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import campaignApi from "../../apis/campaignApi";
 import "./planningManager.css";
+import { Link } from 'react-router-dom/cjs/react-router-dom';
 
 const PlanningManager = () => {
 
@@ -336,7 +337,7 @@ const PlanningManager = () => {
             dataIndex: 'statusName',
             key: 'statusName',
         },
-        
+
         {
             title: 'Trạng thái',
             dataIndex: 'status',
@@ -354,7 +355,6 @@ const PlanningManager = () => {
                 <div>
                     <Row style={{ display: 'flex', flexDirection: 'column' }}>
                         {user.role === 'trưởng ban kế hoạch' && (
-
                             <div>
                                 <Button
                                     size="small"
@@ -401,6 +401,19 @@ const PlanningManager = () => {
                                 </Popconfirm>
                             </div>
                         )}
+                        {
+                            user.role === 'Admin' && (
+                                <div style={{ marginTop: 10 }}>
+                                    <Link to={`/media-campaign/${record.campaignId}`}
+                                        size="small"
+                                        icon={<InfoCircleOutlined />}
+                                        style={{ width: 150, borderRadius: 15, height: 30 }}
+                                    >
+                                        {"Chi tiết"}
+                                    </Link>
+                                </div>
+                            )
+                        }
                     </Row>
                 </div >
             ),
