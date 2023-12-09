@@ -17,6 +17,9 @@ import Report from "page/Report";
 import Grateful from "page/Grateful";
 import New from "page/New";
 import NewDetails from "page/NewDetails";
+import MediaPage from "page/MediaPage/MediaPage";
+import MediaImage from "page/MediaPage/MediaImagePage";
+import MediaVideo from "page/MediaPage/MediaVideoPage";
 
 
 export const router = createBrowserRouter(
@@ -26,6 +29,9 @@ export const router = createBrowserRouter(
         <Route index element={<Home />} />
         <Route path="gioithieu" element={<About />} />
         <Route path="thamgia" element={<VolunteerPage />} />
+        <Route path="thuvienanh" element={<MediaPage />} />
+        <Route path="mediaImage/:idcampaign" element={<MediaImage />} />
+        <Route path="mediaVideo/:idcampaign" element={<MediaVideo />} />
         <Route path="chiendich" element={<Campaign />} />
         <Route path="baocao" element={<Report />} />
         <Route path="trian" element={<Grateful />} />
