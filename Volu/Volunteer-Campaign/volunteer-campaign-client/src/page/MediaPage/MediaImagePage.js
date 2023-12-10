@@ -39,9 +39,9 @@ function MediaImage() {
             <HeaderPage title={campaign} />
             <hr />
             {
-                images.map((value,index) => {
-                    <img src={value.image}/>
-                })
+                images.map((value,index) => 
+                    <img key={index} src={value.image}/>
+                )
             }
         </div>
     )

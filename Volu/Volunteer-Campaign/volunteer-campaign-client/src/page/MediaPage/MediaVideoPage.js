@@ -39,14 +39,14 @@ function MediaVideo() {
             <HeaderPage title={campaign} />
             <hr />
             {
-                videos.map((value, index) => {
+                videos.map((value, index) => 
                     <div>
                         <video controls width="300">
                             <source src={value.video} type="video/mp4" />
                             Your browser does not support the video tag.
                         </video>
                     </div>
-                })
+                )
             }
         </div>
     )

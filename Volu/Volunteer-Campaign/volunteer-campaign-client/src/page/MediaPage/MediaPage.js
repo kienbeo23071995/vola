@@ -1,5 +1,4 @@
 import campaignApi from "apis/campaignApi";
-import axios from "axios";
 import HeaderPage from "page/components/HeaderPage";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
