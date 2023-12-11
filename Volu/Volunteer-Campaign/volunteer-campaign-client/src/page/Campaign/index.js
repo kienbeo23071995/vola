@@ -47,7 +47,7 @@ function Campaign() {
                                         <td>{campaign.name}</td>
                                         <td>{new Date(campaign.start_date).toLocaleDateString()}</td>
                                         <td>{new Date(campaign.end_date).toLocaleDateString()}</td>
-                                        <td>{campaign.description}</td>
+                                        <td dangerouslySetInnerHTML={{ __html: campaign.description }}>{campaign.description}</td>
                                         <td>{campaign.title}</td>
                                         <td>{campaign.location}</td>
                                         <td>

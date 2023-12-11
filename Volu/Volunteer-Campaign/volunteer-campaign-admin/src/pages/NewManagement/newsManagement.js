@@ -26,6 +26,8 @@ import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import newsApi from "../../apis/newsApi";
 import "./newsManagement.css";
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 const { Option } = Select;
 
 const NewManagement = () => {
@@ -38,7 +40,8 @@ const NewManagement = () => {
     const [form] = Form.useForm();
     const [form2] = Form.useForm();
     const [id, setId] = useState();
-
+    const [createContent,setCreateContent] = useState('');
+    const [updateContent,setUpdateContent] = useState('');
 
     const showModal = () => {
         setOpenModalCreate(true);
@@ -49,7 +52,7 @@ const NewManagement = () => {
         try {
             const milestone = {
                 "title": values.title,
-                "content": values.content,
+                "content": createContent,
                 "created_at": values.created_at,
             }
             return newsApi.createNews(milestone).then(response => {
@@ -84,7 +87,7 @@ const NewManagement = () => {
 
             const milestone = {
                 "title": values.title,
-                "content": values.content,
+                "content": updateContent,
                 "created_at": values.created_at,
             }
             await newsApi.updateNews(milestone, id).then(response => {
@@ -177,6 +180,7 @@ const NewManagement = () => {
                     content: response.content,
                     created_at: moment(response.created_at),
                 });
+                setUpdateContent(response.content);
                 setLoading(false);
             } catch (error) {
                 throw error;
@@ -383,7 +387,9 @@ const NewManagement = () => {
                             ]}
                             style={{ marginBottom: 10 }}
                         >
-                            <Input.TextArea placeholder="Nội dung bài viết" />
+                            <CKEditor editor={ClassicEditor} data="<p>Please input content here</p>" onChange={(event,editor) => {
+                                         setCreateContent(editor.getData());
+                                }} />
                         </Form.Item>
                         <Form.Item
                             name="created_at"
@@ -457,7 +463,9 @@ const NewManagement = () => {
                             ]}
                             style={{ marginBottom: 10 }}
                         >
-                            <Input.TextArea placeholder="Nội dung bài viết" />
+                            <CKEditor editor={ClassicEditor} data={updateContent} onChange={(event,editor) => {
+                                         setUpdateContent(editor.getData());
+                                }} />
                         </Form.Item>
                         <Form.Item
                             name="created_at"

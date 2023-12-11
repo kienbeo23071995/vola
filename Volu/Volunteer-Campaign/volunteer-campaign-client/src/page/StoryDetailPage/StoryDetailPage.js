@@ -39,7 +39,7 @@ function StoryDetailPage() {
           </div>
           <img src={story.imageUrl} alt="" className="story-image" />
           <h1>{story.name}</h1>
-          <div>{story.content}</div>
+          <div dangerouslySetInnerHTML={{__html: story.content}}></div>
         </Row>
       )}
     </main>

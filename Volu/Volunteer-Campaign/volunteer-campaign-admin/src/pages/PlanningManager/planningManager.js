@@ -30,6 +30,8 @@ import React, { useEffect, useState } from 'react';
 import campaignApi from "../../apis/campaignApi";
 import "./planningManager.css";
 import { Link } from 'react-router-dom/cjs/react-router-dom';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { CKEditor } from '@ckeditor/ckeditor5-react';
 
 const PlanningManager = () => {
 
@@ -40,7 +42,8 @@ const PlanningManager = () => {
     const [form] = Form.useForm();
     const [form2] = Form.useForm();
     const [id, setId] = useState();
-
+    const [createContent,setCreateContent] = useState('');
+    const [updateContent,setUpdateContent] = useState('');
 
     const showModal = () => {
         setOpenModalCreate(true);
@@ -61,7 +64,7 @@ const PlanningManager = () => {
 
             const campaign = {
                 "name": values.name,
-                "description": values.description,
+                "description": createContent,
                 "start_date": values.start_date,
                 "end_date": values.end_date,
                 "title": values.title,
@@ -108,7 +111,7 @@ const PlanningManager = () => {
             }
             const campaign = {
                 "name": values.name,
-                "description": values.description,
+                "description": updateContent,
                 "start_date": values.start_date,
                 "end_date": values.end_date,
                 "title": values.title,
@@ -213,6 +216,7 @@ const PlanningManager = () => {
                     statusId: response.statusName,
 
                 });
+                updateContent(response.description);
                 console.log(form2);
                 setLoading(false);
             } catch (error) {
@@ -580,7 +584,9 @@ const PlanningManager = () => {
                             ]}
                             style={{ marginBottom: 10 }}
                         >
-                            <Input placeholder="Mô tả" />
+                            <CKEditor editor={ClassicEditor} data="<p>Please input content here</p>" onChange={(event,editor) => {
+                                         setCreateContent(editor.getData());
+                                }} />
                         </Form.Item>
                         <Form.Item
                             name="title"
@@ -714,7 +720,9 @@ const PlanningManager = () => {
                             ]}
                             style={{ marginBottom: 10 }}
                         >
-                            <Input placeholder="Mô tả" />
+                            <CKEditor editor={ClassicEditor} data={updateContent} onChange={(event,editor) => {
+                                         setUpdateContent(editor.getData());
+                                }} />
                         </Form.Item>
                         <Form.Item
                             name="title"

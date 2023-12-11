@@ -27,6 +27,8 @@ import React, { useEffect, useState } from 'react';
 import campaignApi from '../../apis/campaignApi';
 import storyApi from "../../apis/storyApi";
 import "./storyManagement.css";
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 const { Option } = Select;
 
 const StoryManagement = () => {
@@ -39,7 +41,8 @@ const StoryManagement = () => {
     const [form2] = Form.useForm();
     const [id, setId] = useState();
     const [campaignList, setCampaignList] = useState([]);
-
+    const [createContent,setCreateContent] = useState('');
+    const [updateContent,setUpdateContent] = useState('');
 
     const showModal = () => {
         setOpenModalCreate(true);
@@ -50,7 +53,7 @@ const StoryManagement = () => {
         try {
             const campaign = {
                 "name": values.name,
-                "content": values.content,
+                "content": createContent,
                 "title": values.title,
                 "created_at": values.created_at,
                 "campaignId": values.campaignId
@@ -87,7 +90,7 @@ const StoryManagement = () => {
             const campaign = {
                 "storyId": id,
                 "name": values.name,
-                "content": values.content,
+                "content": updateContent,
                 "title": values.title,
                 "created_at": values.created_at,
                 "campaignId": values.campaignId
@@ -184,6 +187,7 @@ const StoryManagement = () => {
                     created_at: moment(response.created_at),
                     campaignId: response.campaignId,
                 });
+                setUpdateContent(response.content);
                 console.log(response);
                 setLoading(false);
             } catch (error) {
@@ -236,6 +240,9 @@ const StoryManagement = () => {
             title: 'Nội dung',
             dataIndex: 'content',
             key: 'content',
+            render: (value) => (
+                <div dangerouslySetInnerHTML={{ __html: value }} />
+            )
         },
         {
             title: 'Tiêu đề',
@@ -417,7 +424,9 @@ const StoryManagement = () => {
                                 ]}
                                 style={{ marginBottom: 10 }}
                             >
-                                <Input.TextArea placeholder="Nội dung" />
+                                <CKEditor editor={ClassicEditor} data="<p>Please input content here</p>" onChange={(event,editor) => {
+                                         setCreateContent(editor.getData());
+                                }} />
                             </Form.Item>
                             <Form.Item
                                 name="title"
@@ -526,7 +535,9 @@ const StoryManagement = () => {
                                 ]}
                                 style={{ marginBottom: 10 }}
                             >
-                                <Input.TextArea placeholder="Nội dung" />
+                                <CKEditor editor={ClassicEditor} data={updateContent} onChange={(event,editor) => {
+                                         setUpdateContent(editor.getData());
+                                }} />
                             </Form.Item>
                             <Form.Item
                                 name="title"

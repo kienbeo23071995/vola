@@ -34,7 +34,7 @@ function NewDetails() {
                                     <Card.Img variant="top" src={news.image} />
                                     <Card.Body>
                                         <Card.Title>{news.title}</Card.Title>
-                                        <Card.Text>{news.content}</Card.Text>
+                                        <Card.Text dangerouslySetInnerHTML={{__html: news.content}}></Card.Text>
                                         {/* Các thông tin khác của tin tức */}
                                     </Card.Body>
                                 </Card>

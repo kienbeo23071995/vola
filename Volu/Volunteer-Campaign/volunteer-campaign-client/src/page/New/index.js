@@ -33,7 +33,7 @@ function New() {
                                 <Card className="custom-card">
                                     <Card.Body>
                                         <Card.Title>{newsItem.title}</Card.Title>
-                                        <Card.Text>{newsItem.content}</Card.Text>
+                                        <Card.Text dangerouslySetInnerHTML={{__html: newsItem.content}}></Card.Text>
                                         <Link
                                             className="flex items-center text-[15px] mt-[15px]"
                                             to={`/news-details/${newsItem.newId}`}
